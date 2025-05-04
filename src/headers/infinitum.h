@@ -4,7 +4,8 @@
 #include <stdbool.h>
 
 #define MALLOC_ERR -2
-#define REALLOC_ERR -3 
+#define REALLOC_ERR -3
+#define NODE_CREATION_ERR -50
 
 typedef struct InfNode {
 	int fd;

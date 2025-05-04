@@ -5,28 +5,50 @@
 void move_fsp_f(long long places) {
 
 	for (long long ll = 0; ll < places; ll++)
-		if (FSP -> next)
-			FSP = FSP -> next;
+		if (!FSP)
+			return;
 		else
-			break;
+			FSP = FSP -> next;
 
 }
 
 void move_fsp_b(long long places) {
 
 	for (long long ll = 0; ll < places; ll++)
-		if (FSP -> prev)
-			FSP = FSP -> prev;
+		if (!FSP)
+			return;
 		else
-			break;
+			FSP = FSP -> prev;
 
 }
+
+InfNData *query_fsp(void) {
+
+	InfNData *ndata;
+
+	if ((ndata = malloc(sizeof(InfNData))) == NULL) {
+		errno = MALLOC_ERR;
+		return NULL;
+	}
+	ndata -> fd = FSP -> fd;
+	ndata -> filename = FSP -> filename;
+	ndata -> is_grouper = FSP -> is_grouper;
+	ndata -> is_root = FSP -> is_root;
+	return ndata;
+
+}
+
+InfNode *get_fsp(void) { return FSP; }
 
 InfNData *create_node_fsp(char *filename) {
 
 	InfNode *fsn;
 	InfNData *ndata;
 
+	if (FSP -> next) {
+		errno = NODE_CREATION_ERR;
+		return NULL;
+	}
 	if ((fsn = malloc(sizeof(InfNode))) == NULL || (ndata = malloc(sizeof(InfNData))) == NULL) {
 		errno = MALLOC_ERR;
 		return NULL;
