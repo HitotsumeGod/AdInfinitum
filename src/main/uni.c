@@ -37,3 +37,18 @@ bool set_fs(InfNode *fsroot) {
 	return true;
 
 }
+
+void free_inf(InfNode *fsr) {
+
+	InfNode *temp;
+
+	temp = FSP;
+	FSP = fsr;
+	for (; (fsr = get_fsp()) -> next != NULL; move_fsp_f(1)) 
+		if (fsr -> prev)
+			free(fsr -> prev);
+	if (fsr)
+		free(fsr);
+	FSP = temp;
+
+}

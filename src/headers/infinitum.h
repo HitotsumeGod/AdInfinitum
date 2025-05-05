@@ -45,7 +45,7 @@ extern InfNode *FSP;							//THE FILESYSTEM POINTER, USED BY THE FSP API
 
 extern InfNode *init_inf(FSTemplate form, void *params);		//INIT A NEW INFINITUM FILESYSTEM AND RETURN THE ROOT NODE
 extern bool set_fs(InfNode *fsroot);					//FAILS IF NOT PROVIDED WITH A ROOT NODE
-extern void free_inf(InfNode *fsroot);
+extern void free_inf(InfNode *fsroot);					//FREES AN INF FS VIA FSP API; ENSURES FSP IS SET TO ORIGINAL VALUE BEFORE RETURNING
 
 //PRIMARY FS API (CFS)
 
