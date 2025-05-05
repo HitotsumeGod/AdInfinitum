@@ -21,6 +21,20 @@ InfNode *init_inf(FSTemplate f, void *args) {
 		fsroot -> data = NULL;
 		fsroot -> prev = NULL;
 		fsroot -> next = NULL;
+		set_fs(fsroot);
+		free(create_node_fsp("1"));
+		move_fsp_f(1);
+		free(create_node_fsp("2"));
+		move_fsp_f(1);
+		free(create_node_fsp("3"));
+		move_fsp_f(1);
+		free(create_node_fsp("4"));
+		move_fsp_f(1);
+		free(create_node_fsp("5"));
+		move_fsp_f(1);
+		free(create_node_fsp("6"));
+		move_fsp_f(1);
+		free(create_node_fsp("7"));		
 		break;
 	}
 	return fsroot;
