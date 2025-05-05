@@ -68,3 +68,20 @@ InfNData *create_node_fsp(char *filename) {
 	return ndata;
 
 }
+
+bool unlink_fsp(void) {
+
+	InfNode *next, *prev;
+
+	if (!FSP)
+		return false;
+	next = FSP -> next;
+	prev = FSP -> prev;
+	free(FSP);
+	prev -> next = next;
+	if (next)
+		next -> prev = prev;
+	FSP = prev;
+	return true;
+
+}
