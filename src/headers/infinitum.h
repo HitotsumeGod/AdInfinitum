@@ -11,6 +11,7 @@ typedef struct InfNode {
 	int fd;
 	char *filename;
 	bool is_grouper;
+	bool is_in_group;
 	bool is_root;
 	void *data;
 	struct InfNode *prev;
@@ -21,6 +22,7 @@ typedef struct {
 	int fd;
 	char *filename;
 	bool is_grouper;
+	bool is_in_group;
 	bool is_root;
 } InfNData;
 
