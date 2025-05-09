@@ -6,6 +6,8 @@
 #define MALLOC_ERR -2
 #define REALLOC_ERR -3
 #define NODE_CREATION_ERR -50
+#define NODE_MATCH_ERR -51
+#define INV_FILE_DESC_ERR -60
 
 typedef struct InfNode {
 	int fd;
@@ -22,7 +24,6 @@ typedef struct {
 	int fd;
 	char *filename;
 	bool is_grouper;
-	bool is_in_group;
 	bool is_root;
 } InfNData;
 
