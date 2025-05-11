@@ -2,23 +2,22 @@
 #include <errno.h>
 #include "infinitum.h"
 
-void move_fsp_f(long long places) {
+void move_fsp(inf_t places) {
 
-	for (long long ll = 0; ll < places; ll++)
-		if (!FSP)
-			return;
-		else
-			FSP = FSP -> next;
-
-}
-
-void move_fsp_b(long long places) {
-
-	for (long long ll = 0; ll < places; ll++)
-		if (!FSP)
-			return;
-		else
-			FSP = FSP -> prev;
+	if (places > 0) 
+		for (inf_t i = 0; i < places; i++)
+			if (!FSP)
+				return;
+			else
+				FSP = FSP -> next;
+	else if (places < 0) {
+		places *= -1;
+		for (inf_t i = 0; i < places; i++)
+			if (!FSP)
+				return;
+			else
+				FSP = FSP -> prev;
+	}
 
 }
 

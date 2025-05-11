@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include "infinitum.h"
@@ -7,35 +8,31 @@ InfNode *FSR, *FSP;
 InfNode *init_inf(FSTemplate f, void *args) {
 
 	InfNode *fsroot;
+	char int_to_str;
 
 	switch (f) {
 	case SIMPLE:
 		if ((fsroot = malloc(sizeof(InfNode))) == NULL) {
 			errno = MALLOC_ERR;	
 			return NULL;
-		}		
+		}
 		fsroot -> fd = 0;
 		fsroot -> filename = "ROOT";
 		fsroot -> is_grouper = false;
 		fsroot -> is_root = true;
+		fsroot -> is_modified = false;
 		fsroot -> data = NULL;
 		fsroot -> prev = NULL;
 		fsroot -> next = NULL;
-		set_fs(fsroot);
-		free(create_node_fsp("1"));
-		move_fsp_f(1);
-		free(create_node_fsp("2"));
-		move_fsp_f(1);
-		free(create_node_fsp("3"));
-		move_fsp_f(1);
-		free(create_node_fsp("4"));
-		move_fsp_f(1);
-		free(create_node_fsp("5"));
-		move_fsp_f(1);
-		free(create_node_fsp("6"));
-		move_fsp_f(1);
-		free(create_node_fsp("7"));		
-		break;
+		//set_fs(fsroot);
+		/*for (int i = 1; i <= 7; i++) {
+			if (sprintf(&int_to_str, "%d", i) == -1) {
+				errno = FORMAT_ERR;
+				return NULL;
+			}
+			free(create_node_fsp(&int_to_str));					//IMMEDIATELY FREE UNNEEDED INFNDATA STRUCT
+			move_fsp_f(1);
+		}*/
 	}
 	return fsroot;
 
@@ -52,17 +49,21 @@ bool set_fs(InfNode *fsroot) {
 
 }
 
-void free_inf(InfNode *fsr) {
+bool free_inf(InfNode *fsr, InfNode *ptr) {
 
-	InfNode *temp;
-
-	temp = FSP;
-	FSP = fsr;
-	for (; (fsr = get_fsp()) -> next != NULL; move_fsp_f(1)) 
-		if (fsr -> prev)
+	if (!fsr) {
+		errno = BAD_ARGS_ERR;
+		return false;
+	}
+	for (FSP = fsr; (fsr = get_fsp()) -> next != NULL; move_fsp(1)) 
+		if (fsr -> prev) {	
+			if (fsr -> prev -> is_modified)
+				free(fsr -> prev -> data);
 			free(fsr -> prev);
+		}
 	if (fsr)
 		free(fsr);
-	FSP = temp;
+	FSP = ptr;
+	return true;
 
 }
