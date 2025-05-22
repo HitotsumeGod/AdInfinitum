@@ -14,7 +14,13 @@ int main(void) {
 	move_fsp(1);
 	free(create_node_fsp("Soulfire: Valor"));
 	move_fsp(1);
+	free(create_node_fsp("King Julian of Bums"));
+	move_fsp(1);
+	free(create_node_fsp("Cammy the wammy"));
+	move_fsp(1);
+	free(create_node_fsp("Doomguy"));
 	write_to_file(str, strlen(str) + 1, get_fsp());
+	write_to_file(str, strlen(str) - 4, get_fsp() -> prev -> prev);
 	read_from_file(&buf, strlen(str) + 1, get_fsp());
 	printf("%s\n", buf);
 	free(buf);

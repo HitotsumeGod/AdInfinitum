@@ -24,15 +24,6 @@ InfNode *init_inf(FSTemplate f, void *args) {
 		fsroot -> data = NULL;
 		fsroot -> prev = NULL;
 		fsroot -> next = NULL;
-		//set_fs(fsroot);
-		/*for (int i = 1; i <= 7; i++) {
-			if (sprintf(&int_to_str, "%d", i) == -1) {
-				errno = FORMAT_ERR;
-				return NULL;
-			}
-			free(create_node_fsp(&int_to_str));					//IMMEDIATELY FREE UNNEEDED INFNDATA STRUCT
-			move_fsp_f(1);
-		}*/
 	}
 	return fsroot;
 
@@ -44,30 +35,37 @@ bool set_fs(InfNode *fsroot) {
 		return false;
 	else if (!fsroot -> is_root)
 		return false;
-	FSR = FSP = fsroot;
+	FSP = FSR = fsroot;
 	return true;
 
 }
 
 bool free_inf(InfNode *fsr, InfNode *ptr) {
 
+	InfNode *tofree;
+	
 	if (!fsr) {
 		errno = BAD_ARGS_ERR;
 		return false;
 	}
-	for (FSP = fsr; (fsr = get_fsp()) -> next != NULL; move_fsp(1)) 
+	//SINCE MOVE_FSP SHOULD NEVER ADVANCE TO A NULL POSITION, WE ADVANCE UP TO THE LAST NODE AND THEN TERMINATE
+	for (FSP = fsr; (fsr = get_fsp()) -> next != NULL; move_fsp(1))	{
 		if (fsr -> prev) {	
 			if (fsr -> prev -> is_modified) {
 				free(fsr -> prev -> data);
 			}
 			free(fsr -> prev);
 		}
-	if (fsr) {
-		if (fsr -> is_modified)
-			free(fsr -> data);
-		free(fsr);
 	}
-	FSP = ptr;
+	//SO NOW WE NEED TO FREE THE FINAL NODE AND ITS PREDECESSOR MANUALLY
+	if (fsr -> prev -> is_modified)
+		free(fsr -> prev -> data);
+	free(fsr -> prev);
+	if (fsr -> is_modified)
+		free(fsr -> data);
+	free(fsr);
+	if (ptr)
+		FSP = ptr;
 	return true;
 
 }

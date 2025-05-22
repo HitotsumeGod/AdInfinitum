@@ -2,22 +2,23 @@
 #include <errno.h>
 #include "infinitum.h"
 
-void move_fsp(inf_t places) {
+bool move_fsp(inf_t places) {
 
 	if (places > 0) 
 		for (inf_t i = 0; i < places; i++)
 			if (!FSP)
-				return;
+				return false;
 			else
 				FSP = FSP -> next;
 	else if (places < 0) {
 		places *= -1;
 		for (inf_t i = 0; i < places; i++)
 			if (!FSP)
-				return;
+				return false;
 			else
 				FSP = FSP -> prev;
 	}
+	return true;
 
 }
 
@@ -56,6 +57,7 @@ InfNData *create_node_fsp(char *filename) {
 	fsn -> filename = filename;
 	fsn -> is_grouper = false;
 	fsn -> is_root = false;
+	fsn -> is_modified = false;
 	fsn -> data = NULL;
 	fsn -> prev = FSP;
 	fsn -> next = NULL;

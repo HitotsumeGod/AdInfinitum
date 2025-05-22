@@ -95,7 +95,7 @@ extern bool unlink_node_ing_wn(char *filename, InfNode *grouproot);
 
 //POINTER-BASED FS API (FSP)
 
-extern void move_fsp(inf_t places);
+extern bool move_fsp(inf_t places);
 extern InfNData *query_fsp(void);
 extern InfNode *get_fsp(void);
 extern InfNode *open_fsp(FMode mode);
