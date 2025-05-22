@@ -57,12 +57,16 @@ bool free_inf(InfNode *fsr, InfNode *ptr) {
 	}
 	for (FSP = fsr; (fsr = get_fsp()) -> next != NULL; move_fsp(1)) 
 		if (fsr -> prev) {	
-			if (fsr -> prev -> is_modified)
+			if (fsr -> prev -> is_modified) {
 				free(fsr -> prev -> data);
+			}
 			free(fsr -> prev);
 		}
-	if (fsr)
+	if (fsr) {
+		if (fsr -> is_modified)
+			free(fsr -> data);
 		free(fsr);
+	}
 	FSP = ptr;
 	return true;
 
